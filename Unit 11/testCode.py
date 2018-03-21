@@ -23,6 +23,7 @@
 
 
 from Chapter11.U11_Ex05_ListOperations import *
+from Chapter11.U11_Ex07_InnerProd import *
 
 
 def runTest(testStr, answer):
@@ -125,10 +126,16 @@ def testSort():
     printResults(results)
 
 
+def testInnerProd():
+    results = []
+    results.append(runTest('innerProd([1,2,3], [4,5,6])', 32))
+    results.append(runTest('innerProd([1,2,3], [4,5])', 'Lists must be of same length.'))
+    results.append(runTest('innerProd([1,2], [4,5,6])', 'Lists must be of same length.'))
+    results.append(runTest('innerProd([], [4,5,6])', 'Lists must be of same length.'))
+    results.append(runTest('innerProd([1,2,3], [])', 'Lists must be of same length.'))
+    printResults(results)
+
+
 if __name__ == '__main__':
     # Replace 'function_to_call' with the name of the function you created above
-    testCount()
-    testIsin()
-    testIndex()
-    testReverse()
-    testSort()
+    testInnerProd()
