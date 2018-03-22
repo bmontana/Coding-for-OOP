@@ -1,0 +1,148 @@
+# Card.py
+"""Class for playing cards"""
+#
+#  Author: Bill Montana
+#  Course: Coding for OOP
+# Section: A3
+#    Date: 12 Feb 2018
+#     IDE: PyCharm Community Edition
+#
+# Assignment Info
+#   Example: Card Class
+#     Source: Python Programming
+#    Chapter: 11
+#
+# Program Description
+#   Implementation of a class for a playing card
+#
+# Algorithm (pseudocode)
+#   
+#   
+#   
+#   
+#   
+
+from random import randrange
+from graphics import *
+
+
+class Card:
+    def __init__(self, suit, rank):
+        """
+        Card constructor method
+        :param suit: int -> 0 = hearts, 1 = diamonds, 2 = clubs, 3 = spades
+        :param rank: int -> number rank of card
+        """
+        self.suits = {0: 'H', 1: 'D', 2: 'C', 3: 'S'}
+        self.suitNames = {'H': 'Hearts', 'D': 'Diamonds', 'C': 'Clubs', 'S': 'Spades'}
+        self.ranks = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
+                      '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
+        self.rankNames = {2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7', 8: '8',
+                          9: '9', 10: '10', 11: 'Jack', 12: 'Queen', 13: 'King', 14: 'Ace'}
+        self.suit = suit
+        self.rank = rank
+
+    def setSuit(self, arg):
+        """Sets the suit (int, 0-4) of an individual card"""
+        self.suit = arg
+
+    def setRank(self, arg):
+        self.rank = arg
+
+    def getSuit(self):
+        return self.suit
+
+    def getRank(self):
+        return self.rank
+
+    def getSuitName(self):
+        return self.suitNames[self.suits[self.suit]]
+
+    def getRankName(self):
+        return self.rankNames[self.rank]
+
+    def draw(self, win, center):
+        """
+        Draws the card
+        :param win: Graphics -> window in which to draw
+        :param center: Point -> center of card
+        :return: None
+        """
+        _cards = {(0, 14): 'U11_Ex14_PokerHand/images/ace_of_hearts.gif', (0, 2): 'U11_Ex14_PokerHand/images/2_of_hearts.gif',
+                  (0, 3): 'U11_Ex14_PokerHand/images/3_of_hearts.gif', (0, 4): 'U11_Ex14_PokerHand/images/4_of_hearts.gif',
+                  (0, 5): 'U11_Ex14_PokerHand/images/5_of_hearts.gif', (0, 6): 'U11_Ex14_PokerHand/images/6_of_hearts.gif',
+                  (0, 7): 'U11_Ex14_PokerHand/images/7_of_hearts.gif', (0, 8): 'U11_Ex14_PokerHand/images/8_of_hearts.gif',
+                  (0, 9): 'U11_Ex14_PokerHand/images/9_of_hearts.gif', (0, 10): 'U11_Ex14_PokerHand/images/10_of_hearts.gif',
+                  (0, 11): 'U11_Ex14_PokerHand/images/jack_of_hearts2.gif', (0, 12): 'U11_Ex14_PokerHand/images/queen_of_hearts2.gif',
+                  (0, 13): 'U11_Ex14_PokerHand/images/king_of_hearts2.gif',
+                  (1, 14): 'U11_Ex14_PokerHand/images/ace_of_diamonds.gif', (1, 2): 'U11_Ex14_PokerHand/images/2_of_diamonds.gif',
+                  (1, 3): 'U11_Ex14_PokerHand/images/3_of_diamonds.gif', (1, 4): 'U11_Ex14_PokerHand/images/4_of_diamonds.gif',
+                  (1, 5): 'U11_Ex14_PokerHand/images/5_of_diamonds.gif', (1, 6): 'U11_Ex14_PokerHand/images/6_of_diamonds.gif',
+                  (1, 7): 'U11_Ex14_PokerHand/images/7_of_diamonds.gif', (1, 8): 'U11_Ex14_PokerHand/images/8_of_diamonds.gif',
+                  (1, 9): 'U11_Ex14_PokerHand/images/9_of_diamonds.gif', (1, 10): 'U11_Ex14_PokerHand/images/10_of_diamonds.gif',
+                  (1, 11): 'U11_Ex14_PokerHand/images/jack_of_diamonds2.gif', (1, 12): 'U11_Ex14_PokerHand/images/queen_of_diamonds2.gif',
+                  (1, 13): 'U11_Ex14_PokerHand/images/king_of_diamonds2.gif',
+                  (2, 14): 'U11_Ex14_PokerHand/images/ace_of_clubs.gif', (2, 2): 'U11_Ex14_PokerHand/images/2_of_clubs.gif',
+                  (2, 3): 'U11_Ex14_PokerHand/images/3_of_clubs.gif', (2, 4): 'U11_Ex14_PokerHand/images/4_of_clubs.gif',
+                  (2, 5): 'U11_Ex14_PokerHand/images/5_of_clubs.gif', (2, 6): 'U11_Ex14_PokerHand/images/6_of_clubs.gif',
+                  (2, 7): 'U11_Ex14_PokerHand/images/7_of_clubs.gif', (2, 8): 'U11_Ex14_PokerHand/images/8_of_clubs.gif',
+                  (2, 9): 'U11_Ex14_PokerHand/images/9_of_clubs.gif', (2, 10): 'U11_Ex14_PokerHand/images/10_of_clubs.gif',
+                  (2, 11): 'U11_Ex14_PokerHand/images/jack_of_clubs2.gif', (2, 12): 'U11_Ex14_PokerHand/images/queen_of_clubs2.gif',
+                  (2, 13): 'U11_Ex14_PokerHand/images/king_of_clubs2.gif',
+                  (3, 14): 'U11_Ex14_PokerHand/images/ace_of_spades.gif', (3, 2): 'U11_Ex14_PokerHand/images/2_of_spades.gif',
+                  (3, 3): 'U11_Ex14_PokerHand/images/3_of_spades.gif', (3, 4): 'U11_Ex14_PokerHand/images/4_of_spades.gif',
+                  (3, 5): 'U11_Ex14_PokerHand/images/5_of_spades.gif', (3, 6): 'U11_Ex14_PokerHand/images/6_of_spades.gif',
+                  (3, 7): 'U11_Ex14_PokerHand/images/7_of_spades.gif', (3, 8): 'U11_Ex14_PokerHand/images/8_of_spades.gif',
+                  (3, 9): 'U11_Ex14_PokerHand/images/9_of_spades.gif', (3, 10): 'U11_Ex14_PokerHand/images/10_of_spades.gif',
+                  (3, 11): 'U11_Ex14_PokerHand/images/jack_of_spades2.gif', (3, 12): 'U11_Ex14_PokerHand/images/queen_of_spades2.gif',
+                  (3, 13): 'U11_Ex14_PokerHand/images/king_of_spades2.gif'}
+        cardImg = Image(center, _cards.get((self.suit, self.rank)))
+        cardImg.draw(win)
+
+    def __str__(self):
+        return 'Suit: {} ({})\tRank: {} ({})'.format(self.getSuitName(), self.getSuit(), self.getRankName(), self.getRank())
+
+
+class Deck:
+    def __init__(self):
+        self.cards = []
+
+        for s in range(4):
+            for r in range(2, 15):
+                self.cards.append(Card(s, r))
+
+    def getDeck(self):
+        return self.cards
+
+    def shuffle(self):
+        for i in range(self.getLength()):
+            card1 = randrange(self.getLength()); card2 = card1
+            while card2 == card1:
+                card2 = randrange(self.getLength())
+            self.swap(card1, card2)
+
+    def swap(self, card1, card2):
+        self.cards[card1], self.cards[card2] = self.cards[card2], self.cards[card1]
+
+    def cut(self):
+        _length = len(self.cards)
+        cutPoint = randrange(_length // 2 - _length // 10, _length // 2 + _length // 10)
+        cut1 = self.cards[:cutPoint]
+        cut2 = self.cards[cutPoint+1:]
+        self.cards = cut2 + cut1
+
+    def getLength(self):
+        return len(self.cards)
+
+    def toString(self):
+        for card in self.cards:
+            print(card)
+
+
+def main():
+    deck = Deck()
+    deck.shuffle()
+    deck.toString()
+
+if __name__ == '__main__':
+    main()
