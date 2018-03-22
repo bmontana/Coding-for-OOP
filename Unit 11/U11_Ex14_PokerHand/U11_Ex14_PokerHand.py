@@ -7,28 +7,34 @@
 #     IDE: PyCharm Community Edition
 #
 # Assignment Info
-#   Exercise: 12
+#   Exercise: 14
 #     Source: Python Programming
-#    Chapter: 10
+#    Chapter: 11
 #
 # Program Description
 #   Uses Deck and Card classes to "deal" a five-card hand of cards to a Graphwin
+#   Then analyze the hand and print the results to the console
 #
 # Algorithm (pseudocode)
 #   main():
 #       create GraphWin and set coordinates
 #       create Deck object, shuffle, and cut
-#       deal five cards from top of deck (every other card, like a real hand with two players)
+#       deal five cards from top of deck (every other card, like a real hand
+#           with two players)
+#       these cards are added to a PokerHand object
+#       sort hand by suit and rank
 #       draw each card to window, overlapping (because of their large size)
+#       analyze hand and print results to console
 #       wait for mouse click to close window
 
 from Chapter11.U11_Ex14_PokerHand.Card import *
 
 
 class PokerHand:
+    """A PokerHand object is five Card objects in a list"""
     def __init__(self):
         self.hand = []
-        self.xHigh = ''
+        self.xHigh = ''                 # highest card in hand
         self.isPair = False
         self.isTwoPair = False
         self.isThreeOfAKind = False
@@ -41,9 +47,11 @@ class PokerHand:
         self.theHand = ''
 
     def add_card(self, card):
+        """Adds card which is a Card object to hand list"""
         self.hand.append(card)
 
     def update(self):
+        """Analyzes hand"""
         self._x_high()
         self._is_pair()
         self._is_two_pair()
@@ -54,9 +62,10 @@ class PokerHand:
         self._is_four_of_a_kind()
         self._is_straight_flush()
         self._is_royal_flush()
-        self.the_hand()
+        self._the_hand()
 
-    def the_hand(self):
+    def _the_hand(self):
+        """Helper function for hand analysis; checks for highest value hands first"""
         if self.isRoyalFlush:
             self.theHand = 'Royal Flush'
         elif self.isStraightFlush:
@@ -79,15 +88,23 @@ class PokerHand:
             self.theHand = '{} high'.format(self.xHigh)
 
     def sort(self, keyFunc):
+        """
+        Sorts the hand list with the given key function
+        :param keyFunc: str -> function in Card class on which to sort
+        """
         self.hand.sort(key=eval(keyFunc))
 
     def _is_flush(self):
+        """All cards of same suit"""
         _suit = self.hand[0].getSuit()
         self.isFlush = all(card.getSuit() == _suit for card in self.hand)
 
     def _is_straight(self):
+        """Five cards with consecutive ranks"""
         self.hand.sort(key=Card.getRank)
         _isStraight = True
+
+        # special case of A2345 straight
         if self.hand[-1].getRank() == 14 and self.hand[0].getRank() == 2:
             _previousRank = 1
             for card in self.hand[:-1]:
@@ -105,35 +122,49 @@ class PokerHand:
         self.isStraight = _isStraight
 
     def _is_straight_flush(self):
+        """A straight flush is both a straight and a flush"""
         self.isStraightFlush = self.isStraight and self.isFlush
 
     def _is_royal_flush(self):
+        """10JQKA in same suit"""
         self.isRoyalFlush = self.isFlush and self.isStraight and self.hand[0].getRank() == 10
 
     def _is_four_of_a_kind(self):
+        """Four of the five cards have the same rank"""
         self.isFourOfAKind = self._in_a_row(4, 0) or self._in_a_row(4, 1)
 
     def _is_full_house(self):
+        """
+        Two of the five cards have one rank while the other three have another
+        same rank.
+        """
         self.isFullHouse = self._in_a_row(3, 0) and self._in_a_row(2, 3) or \
                            self._in_a_row(2, 0) and self._in_a_row(3, 2)
 
     def _is_three_of_a_kind(self):
+        """Three of the five cards have the same rank"""
         self.isThreeOfAKind = self._in_a_row(3, 0) or \
                               self._in_a_row(3, 1) or \
                               self._in_a_row(3, 2)
 
     def _is_two_pair(self):
+        """Two cards with same rank, and two other cards with another same rank"""
         self.isTwoPair = self._in_a_row(2, 0) and self._in_a_row(2, 2) or \
                          self._in_a_row(2, 0) and self._in_a_row(2, 3) or \
                          self._in_a_row(2, 1) and self._in_a_row(2, 3)
 
     def _is_pair(self):
+        """Two of the five cards with the same rank"""
         self.isPair = self._in_a_row(2, 0) or \
                       self._in_a_row(2, 1) or \
                       self._in_a_row(2, 2) or \
                       self._in_a_row(2, 3)
 
     def _in_a_row(self, num, start):
+        """
+        Helper function to check for num cards in a row with same rank,
+        beginning at start position.
+        """
         i = start + 1
         while i < start + num:
             if not self.hand[i].getRank() == self.hand[start].getRank():
@@ -142,6 +173,7 @@ class PokerHand:
         return True
 
     def _x_high(self):
+        """The rank of the highest card"""
         self.xHigh = self.hand[-1].getRankName()
 
 
@@ -162,13 +194,8 @@ def main():
     pokerHand.sort("Card.getSuit")
     pokerHand.sort("Card.getRank")
 
-
-    # r = 10
     i = 0
     for card in pokerHand.hand:
-        # card.setSuit(0)
-        # card.setRank(r)
-        # r += 1
         card.draw(win, Point(i + 3, 5))
         i += 1
 

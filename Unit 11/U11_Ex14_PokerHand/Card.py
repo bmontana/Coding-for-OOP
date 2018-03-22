@@ -13,14 +13,10 @@
 #    Chapter: 11
 #
 # Program Description
-#   Implementation of a class for a playing card
+#   Implementation of a class for a deck of playing cards
 #
-# Algorithm (pseudocode)
-#   
-#   
-#   
-#   
-#   
+# Notes
+#   Modified to use dictionaries for suit, rank, and names
 
 from random import randrange
 from graphics import *
