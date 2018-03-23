@@ -92,8 +92,11 @@ class Card:
                   (3, 9): 'U11_Ex14_PokerHand/images/9_of_spades.gif', (3, 10): 'U11_Ex14_PokerHand/images/10_of_spades.gif',
                   (3, 11): 'U11_Ex14_PokerHand/images/jack_of_spades2.gif', (3, 12): 'U11_Ex14_PokerHand/images/queen_of_spades2.gif',
                   (3, 13): 'U11_Ex14_PokerHand/images/king_of_spades2.gif'}
-        cardImg = Image(center, _cards.get((self.suit, self.rank)))
-        cardImg.draw(win)
+        self.cardImg = Image(center, _cards.get((self.suit, self.rank)))
+        self.cardImg.draw(win)
+
+    def undraw(self):
+        self.cardImg.undraw()
 
     def __str__(self):
         return 'Suit: {} ({})\tRank: {} ({})'.format(self.getSuitName(), self.getSuit(), self.getRankName(), self.getRank())

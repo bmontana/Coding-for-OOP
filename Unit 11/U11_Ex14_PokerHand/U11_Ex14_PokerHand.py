@@ -183,27 +183,62 @@ def main():
     deck = Deck()
     deck.shuffle()
     deck.cut()
-    i = 0
-    pokerHand = PokerHand()
 
-    while i < 5:
-        card = deck.getDeck()[i*2]
-        pokerHand.add_card(card)
-        i += 1
+    while len(deck.cards) > 4:
+        pokerHand = PokerHand()
 
-    pokerHand.sort("Card.getSuit")
-    pokerHand.sort("Card.getRank")
+        # deal, then burn first five cards
+        i = 0
+        while i < 5:
+            card = deck.getDeck()[0]
+            pokerHand.add_card(card)
+            del deck.cards[0]
+            i += 1
 
-    i = 0
-    for card in pokerHand.hand:
-        card.draw(win, Point(i + 3, 5))
-        i += 1
+        pokerHand.sort("Card.getSuit")
+        pokerHand.sort("Card.getRank")
 
-    pokerHand.update()
-    print(pokerHand.theHand)
+        i = 0
+        for card in pokerHand.hand:
+            card.draw(win, Point(i + 3, 5))
+            i += 1
 
-    win.getMouse()
+        pokerHand.update()
+        output(win, pokerHand.theHand)
+
+        for card in pokerHand.hand:
+            card.undraw()
+
+        # win.getMouse()
     win.close()
+
+
+def output(win, msgText):
+    # create a 'dialog box'
+    rect = Rectangle(Point(3, 6), Point(6, 4))
+    rect.setWidth(1)
+    rect.setOutline('black')
+    rect.setFill('white')
+    rect.draw(win)
+
+    # make it look like a window (-ish)
+    titlebar = Rectangle(Point(3, 6.3), Point(6, 6))
+    titlebar.setFill('grey')
+    titlebar.setOutline('black')
+    titlebar.setWidth(1)
+    titlebar.draw(win)
+    title = Text(Point(4.5, 6.15), 'Your Poker Hand')
+    title.draw(win)
+    msg = Text(Point(4.5, 5.25), msgText)
+    msg.setSize(24)
+    msg.draw(win)
+    msg2 = Text(Point(4.5, 4.4), 'Click to dismiss')
+    msg2.draw(win)
+    win.getMouse()
+
+    # undraw 'dialog box' after mouse click
+    msg.undraw(); msg2.undraw(); rect.undraw(); titlebar.undraw(); title.undraw()
+
 
 if __name__ == '__main__':
     main()
