@@ -24,11 +24,7 @@
 #       subtract(set2) -- returns a new set containing all the elements
 #           of this set that are not in set2
 # Algorithm (pseudocode)
-#   
-#   
-#   
-#   
-#   
+#   Notes are provided for each method in Set
 
 
 class Set:
